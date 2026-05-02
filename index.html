@@ -1,12 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Just a question 😏</title>
+<meta charset="UTF-8">
+<title>Just a question 💙</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  animation: fadeIn 2s ease;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+#yes {
+  background: #00ffae;
+  color: black;
+}
+
+#yes:hover {
+  transform: scale(1.1);
+}
+
+#no {
+  background: #ff4b5c;
+  color: white;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
+
 </head>
-<body style="text-align:center; margin-top:100px; font-family:sans-serif;">
+
+<body>
+
+<div class="container">
   <h1>Do you want to go out with me? 💙</h1>
   
-  <button onclick="alert('I knew it 😎')">YES</button>
-  <button onmouseover="this.style.position='absolute'; this.style.left=Math.random()*300+'px'; this.style.top=Math.random()*300+'px'">NO</button>
+  <button id="yes" onclick="yesClick()">YES 😍</button>
+  <button id="no" onmouseover="moveButton()">NO 😅</button>
+</div>
+
+<script>
+function moveButton() {
+  const btn = document.getElementById("no");
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * window.innerWidth + "px";
+  btn.style.top = Math.random() * window.innerHeight + "px";
+}
+
+function yesClick() {
+  document.body.innerHTML = `
+    <h1 style="text-align:center;margin-top:20%;font-size:3em;">
+      I knew it 😎💙
+    </h1>
+  `;
+}
+</script>
+
 </body>
 </html>

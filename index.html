@@ -2,29 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just a question 💙</title>
+<title>For you 💙</title>
 
 <style>
 body {
   margin: 0;
   height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  font-family: Arial, sans-serif;
-  color: white;
-  overflow: hidden;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+/* قلوب */
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
 }
 
 .container {
   text-align: center;
-  animation: fadeIn 2s ease;
+  color: white;
+  z-index: 1;
 }
 
+/* كتابة متحركة */
 h1 {
   font-size: 2.5em;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px white; }
+  to { text-shadow: 0 0 25px #fff, 0 0 40px #ff4b5c; }
 }
 
 button {
@@ -51,11 +77,6 @@ button {
   color: white;
   position: relative;
 }
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
 </style>
 
 </head>
@@ -63,13 +84,14 @@ button {
 <body>
 
 <div class="container">
-  <h1>Do you want to go out with me? 💙</h1>
+  <h1>Do you want to go out with me? 💖</h1>
   
   <button id="yes" onclick="yesClick()">YES 😍</button>
   <button id="no" onmouseover="moveButton()">NO 😅</button>
 </div>
 
 <script>
+// زر NO كيهرب
 function moveButton() {
   const btn = document.getElementById("no");
   btn.style.position = "absolute";
@@ -77,13 +99,30 @@ function moveButton() {
   btn.style.top = Math.random() * window.innerHeight + "px";
 }
 
+// YES click
 function yesClick() {
   document.body.innerHTML = `
-    <h1 style="text-align:center;margin-top:20%;font-size:3em;">
-      I knew it 😎💙
+    <h1 style="text-align:center;margin-top:20%;font-size:3em;color:white;">
+      You just made me the happiest 😍💙
     </h1>
   `;
 }
+
+// قلوب طالعين
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 300);
 </script>
 
 </body>

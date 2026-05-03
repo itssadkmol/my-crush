@@ -2,55 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For you 💙</title>
+<title>For someone special 💙</title>
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   height: 100vh;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-}
-
-/* قلوب */
-.heart {
-  position: absolute;
-  color: rgba(255,255,255,0.7);
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(100vh);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10vh);
-    opacity: 0;
-  }
-}
-
-.container {
-  text-align: center;
+  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
   color: white;
-  z-index: 1;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
 }
 
-/* كتابة متحركة */
-h1 {
+/* center */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* typing effect */
+#text {
   font-size: 2.5em;
-  margin-bottom: 20px;
-  animation: glow 2s infinite alternate;
+  border-right: 3px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 4s steps(40) forwards, blink .7s infinite;
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px white; }
-  to { text-shadow: 0 0 25px #fff, 0 0 40px #ff4b5c; }
+@keyframes typing {
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* buttons */
+.buttons {
+  margin-top: 40px;
+  opacity: 0;
+  transition: 1s;
 }
 
 button {
@@ -64,8 +64,7 @@ button {
 }
 
 #yes {
-  background: #00ffae;
-  color: black;
+  background: linear-gradient(45deg, #00ffcc, #00c3ff);
 }
 
 #yes:hover {
@@ -74,8 +73,14 @@ button {
 
 #no {
   background: #ff4b5c;
-  color: white;
   position: relative;
+}
+
+/* particles */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 </style>
 
@@ -83,15 +88,24 @@ button {
 
 <body>
 
+<canvas id="bg"></canvas>
+
 <div class="container">
-  <h1>Do you want to go out with me? 💖</h1>
-  
-  <button id="yes" onclick="yesClick()">YES 😍</button>
-  <button id="no" onmouseover="moveButton()">NO 😅</button>
+  <h1 id="text">I didn’t want this to be just streaks... 💙</h1>
+
+  <div class="buttons" id="btns">
+    <button id="yes" onclick="yesClick()">YES 😍</button>
+    <button id="no" onmouseover="moveButton()">NO 😅</button>
+  </div>
 </div>
 
 <script>
-// زر NO كيهرب
+// typing show buttons
+setTimeout(() => {
+  document.getElementById("btns").style.opacity = 1;
+}, 4500);
+
+// NO button moves
 function moveButton() {
   const btn = document.getElementById("no");
   btn.style.position = "absolute";
@@ -102,27 +116,51 @@ function moveButton() {
 // YES click
 function yesClick() {
   document.body.innerHTML = `
-    <h1 style="text-align:center;margin-top:20%;font-size:3em;color:white;">
-      You just made me the happiest 😍💙
-    </h1>
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:3em;">
+      💙 You just made my day 😍
+    </div>
   `;
 }
 
-// قلوب طالعين
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-  document.body.appendChild(heart);
+// particles background
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
 
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2,
+    dx: (Math.random() - 0.5),
+    dy: (Math.random() - 0.5)
+  });
 }
 
-setInterval(createHeart, 300);
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    p.x += p.dx;
+    p.y += p.dy;
+
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
 </script>
 
 </body>
